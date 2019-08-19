@@ -20,7 +20,7 @@ app.use('/payments',payments);
 app.get('*',(req,res)=>{
 res.json({success:true,message:'page not found AKA 404'})
 })
-app.listen(port,'192.168.122.1',(err)=>{
+app.listen(port,(err)=>{
 if (err) {
    console.log(err);
     
