@@ -91,7 +91,7 @@ module.exports = (router) => {
                         function (error, response, body) {
 
                             if (error) {
-                                res.json({ success: false, message: error })
+                                res.json(error)
 
                             } else {
                                 res.json(body).status(200)
@@ -143,12 +143,9 @@ module.exports = (router) => {
                     },
                     function (error, response, body) {
                         if (error) {
-                            res.json({
-                                success: false,
-                                message: error
-                            })
+                            res.json(error)
                         } else {
-                            res.json({body })
+                            res.json(body).status(200)
                         }
     
                     }
@@ -196,7 +193,7 @@ module.exports = (router) => {
                     },
                     function (error, response, body) {
                         if (error) {
-                            res.json({ success: false, message: error });
+                            res.json(error);
                         } else {
                             res.json(body).status(200)
                         }
