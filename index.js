@@ -3,13 +3,13 @@ const app=express();
 const path=require('path');
 const port=3000;
 const router=express.Router();
-
+const cors = require('cors')
 const payments=require('./routes/payments')(router);
 const bodyParser=require('body-parser');
 
 
 
-
+app.use(cors())
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
  
