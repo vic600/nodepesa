@@ -9,7 +9,10 @@ const bodyParser=require('body-parser');
 
 
 
-app.use(cors())
+app.use(cors({
+    origin:'http://localhost:8100',
+    optionsSuccessStatus: 200
+}))
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
  
