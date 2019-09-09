@@ -222,8 +222,8 @@ module.exports = (router) => {
                     "payment_method": "paypal"
                 },
                 "redirect_urls": {
-                    "return_url": "http://mpay-quatrix.kylix.online/payments/execute",
-                    "cancel_url": "http://mpay-quatrix.kylix.online/payments/cancel"
+                    "return_url": "138.68.105.20:3000/payments/execute",
+                    "cancel_url": "138.68.105.20:3000/payments/cancel"
                 },
                 "transactions": [{
                     "amount": {
