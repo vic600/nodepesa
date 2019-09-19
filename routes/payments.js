@@ -242,7 +242,7 @@ module.exports = (router) => {
                     for (var index = 0; index < loot.links.length; index++) {
                         //Redirect user to this endpoint for redirect url
                             if (loot.links[index].rel === 'approval_url') {
-                                console.log(loot.links[index].href);
+                                //console.log(loot.links[index].href);
                                 const redirect=loot.links[index].href
                                  res.json({success:true,id:loot.id,redirect:redirect}).status(200)
                             }
