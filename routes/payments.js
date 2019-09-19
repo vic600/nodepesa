@@ -293,18 +293,23 @@ module.exports = (router) => {
         
     })
     router.post('/check',(req,res)=>{
-        const paymentId = req.body.pid;
-        payment.payment.get(paymentId, function (error, payment) {
-            if (error) {
-                console.log(error);
-                throw error;
-            } else {
-               // console.log("Get Payment Response");
-                //console.log(JSON.stringify(payment));
-                res.json({success:true,id:payment.id,state:payment.state,status:payment.payer.status}).status(200)
-            }
-        
-        });
+        if (!req.body.pid) {
+            res.json({success:false,message:'invalid paymentId'})
+        } else {
+            const paymentId = req.body.pid;
+            payment.payment.get(paymentId, function (error, payment) {
+                if (error) {
+                    console.log(error);
+                    throw error;
+                } else {
+                   // console.log("Get Payment Response");
+                    //console.log(JSON.stringify(payment));
+                    res.json({success:true,id:payment.id,state:payment.state,status:payment.payer.status}).status(200)
+                }
+            
+            });
+        }
+       
     })
     return router
 }
