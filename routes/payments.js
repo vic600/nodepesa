@@ -222,8 +222,8 @@ module.exports = (router) => {
                     "payment_method": "paypal"
                 },
                 "redirect_urls": {
-                    "return_url": "http://138.68.105.20:3000/payments/execute",
-                    "cancel_url": "http://138.68.105.20:3000/payments/cancel"
+                    "return_url": "http://482d2cde.ngrok.io/payments/execute",
+                    "cancel_url": "http://482d2cde.ngrok.io/payments/cancel"
                 },
                 "transactions": [{
                     "amount": {
@@ -244,13 +244,11 @@ module.exports = (router) => {
                             if (loot.links[index].rel === 'approval_url') {
                                 console.log(loot.links[index].href);
                                 const redirect=loot.links[index].href
-                                 res.json({success:true,redirect:redirect}).status(200)
+                                 res.json({success:true,id:loot.id,redirect:redirect}).status(200)
                             }
                         }
                      
                     // res.json({success:true,message:loot})
-                   
-
                 }
             })
         } else {
@@ -258,6 +256,8 @@ module.exports = (router) => {
         }
 
     })
+
+
 
     router.get('/execute', (req, res) => {
         const payer = req.query.PayerID;
@@ -291,6 +291,20 @@ module.exports = (router) => {
             res.json({status:'canceled',success:true,message:'Transaction canceled'});
         }
         
+    })
+    router.post('/check',(req,res)=>{
+        const paymentId = req.body.pid;
+        payment.payment.get(paymentId, function (error, payment) {
+            if (error) {
+                console.log(error);
+                throw error;
+            } else {
+               // console.log("Get Payment Response");
+                //console.log(JSON.stringify(payment));
+                res.json({success:true,id:payment.id,state:payment.state,status:payment.payer.status}).status(200)
+            }
+        
+        });
     })
     return router
 }
