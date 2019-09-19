@@ -222,8 +222,8 @@ module.exports = (router) => {
                     "payment_method": "paypal"
                 },
                 "redirect_urls": {
-                    "return_url": "http://138.68.105.20:3000/payments/execute",
-                    "cancel_url": "http://138.68.105.20:3000/payments/cancel"
+                    "return_url": "http://482d2cde.ngrok.io/payments/execute",
+                    "cancel_url": "http://482d2cde.ngrok.io/payments/cancel"
                 },
                 "transactions": [{
                     "amount": {
@@ -241,13 +241,13 @@ module.exports = (router) => {
                 } else {
                     for (var index = 0; index < loot.links.length; index++) {
                         //Redirect user to this endpoint for redirect url
-                            if (loot.links[index].rel === 'approval_url') {
-                                //console.log(loot.links[index].href);
-                                const redirect=loot.links[index].href
-                                 res.json({success:true,id:loot.id,redirect:redirect}).status(200)
-                            }
+                        if (loot.links[index].rel === 'approval_url') {
+                            //console.log(loot.links[index].href);
+                            const redirect = loot.links[index].href
+                            res.json({ success: true, id: loot.id, redirect: redirect }).status(200)
                         }
-                     
+                    }
+
                     // res.json({success:true,message:loot})
                 }
             })
@@ -261,7 +261,7 @@ module.exports = (router) => {
 
     router.get('/execute', (req, res) => {
         const payer = req.query.PayerID;
-        this.token=req.query.token;
+        this.token = req.query.token;
         var execute_payment_json = {
             "payer_id": payer,
             "transactions": [{
@@ -284,17 +284,17 @@ module.exports = (router) => {
     })
 
     router.get('/cancel', (req, res) => {
-        const tok=req.query.token
-        if (this.token==tok) {
-            res.json({success:false,message:'invalid token'})
+        const tok = req.query.token
+        if (this.token == tok) {
+            res.json({ success: false, message: 'invalid token' })
         } else {
-            res.json({status:'canceled',success:true,message:'Transaction canceled'});
+            res.json({ status: 'canceled', success: true, message: 'Transaction canceled' });
         }
-        
+
     })
-    router.post('/check',(req,res)=>{
+    router.post('/check', (req, res) => {
         if (!req.body.pid) {
-            res.json({success:false,message:'invalid paymentId'})
+            res.json({ success: false, message: 'invalid paymentId' })
         } else {
             const paymentId = req.body.pid;
             payment.payment.get(paymentId, function (error, payment) {
@@ -302,14 +302,14 @@ module.exports = (router) => {
                     console.log(error);
                     throw error;
                 } else {
-                   // console.log("Get Payment Response");
+                    // console.log("Get Payment Response");
                     //console.log(JSON.stringify(payment));
-                    res.json({success:true,id:payment.id,state:payment.state,status:payment.payer.status}).status(200)
+                    res.json({ success: true, id: payment.id, state: payment.state}).status(200)
                 }
-            
+
             });
         }
-       
+
     })
     return router
 }
